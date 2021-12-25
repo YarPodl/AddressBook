@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.navigation.fragment.findNavController
 import com.example.addressbook.data.ContactEntry
 import com.example.addressbook.databinding.FragmentSecondBinding
 
@@ -96,9 +97,12 @@ class ContactViewFragment : Fragment() {
 
         if (contact.id != null)
         {
+            mainActivity.currentContact = contact
             mainActivity.databaseAdapter.update(contact)
         }
         else {
+            mainActivity.currentContact = null
+            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
             mainActivity.databaseAdapter.insert(contact)
         }
     }
