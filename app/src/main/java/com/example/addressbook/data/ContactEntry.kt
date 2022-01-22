@@ -4,4 +4,5 @@ class ContactEntry(
     var id : Long?,
     var name: String,
     var phone: String,
+    var image: ByteArray?,
 );

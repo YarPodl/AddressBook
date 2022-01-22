@@ -3,11 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/PGU/Androdi2/AddressBook/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/PGU/Androdi2/AddressBook/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/PGU/Androdi2/AddressBook/app/src/main/res/layout/content_main.xml" value="0.14270833333333333" />
         <entry key="..\:/PGU/Androdi2/AddressBook/app/src/main/res/layout/fragment_first.xml" value="0.18" />
         <entry key="..\:/PGU/Androdi2/AddressBook/app/src/main/res/layout/fragment_second.xml" value="0.2" />
-        <entry key="..\:/PGU/Androdi2/AddressBook/app/src/main/res/layout/recycler_view_item.xml" value="0.25" />
+        <entry key="..\:/PGU/Androdi2/AddressBook/app/src/main/res/layout/recycler_view_item.xml" value="0.33" />
         <entry key="..\:/PGU/Androdi2/AddressBook/app/src/main/res/menu/menu_main.xml" value="0.27291666666666664" />
       </map>
     </option>
