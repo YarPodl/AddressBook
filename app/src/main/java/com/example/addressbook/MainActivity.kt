@@ -26,13 +26,23 @@ import java.io.InputStream
 import java.lang.Exception
 import java.util.stream.Stream
 import android.graphics.Bitmap.CompressFormat
+import android.media.MediaPlayer
 import java.io.ByteArrayOutputStream
+import android.media.RingtoneManager
+
+import android.media.Ringtone
+
+
+
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+
+    private lateinit var playerDel : MediaPlayer
+    private lateinit var playerNew : MediaPlayer
 
     lateinit var databaseAdapter: DatabaseAdapter
     var position : Int = 0
@@ -48,6 +58,9 @@ class MainActivity : AppCompatActivity() {
 
         databaseAdapter = DatabaseAdapter(this)
         databaseAdapter.open();
+
+        playerDel = MediaPlayer.create(this, R.raw.del)
+        playerNew = MediaPlayer.create(this, R.raw.soundnew)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -72,12 +85,16 @@ class MainActivity : AppCompatActivity() {
                 val navController = findNavController(R.id.nav_host_fragment_content_main)
                 if (currentContact?.id != null)
                     databaseAdapter.delete(currentContact?.id!!)
+
+                playerDel!!.start()
+
                 navController.navigate(R.id.action_SecondFragment_to_FirstFragment)
                 return true
             }
             resources.getString(R.string.newContact) -> {
                 val navController = findNavController(R.id.nav_host_fragment_content_main)
                 currentContact = null
+                playerNew!!.start()
                 navController.navigate(R.id.action_FirstFragment_to_SecondFragment)
                 return true
             }

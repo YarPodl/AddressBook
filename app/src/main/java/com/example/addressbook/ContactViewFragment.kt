@@ -143,9 +143,6 @@ class ContactViewFragment : Fragment() {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
             res = mainActivity.databaseAdapter.insert(contact)
         }
-
-        if (res != 1L)
-            throw Exception("Не удалось выполнить операцию с БД")
     }
 
     enum class ContactState {
