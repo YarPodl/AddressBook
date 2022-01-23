@@ -53,7 +53,7 @@ class ContactListFragment : Fragment() {
         }
         recyclerView.scrollToPosition(mainActivity.position)
 
-        mainActivity.menuItems = listOf(resources.getString(R.string.newContact))
+        mainActivity.menuItems = listOf(resources.getString(R.string.newContact), resources.getString(R.string.currentLocation))
     }
 
     override fun onDestroyView() {

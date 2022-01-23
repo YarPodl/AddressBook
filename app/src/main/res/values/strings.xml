@@ -19,4 +19,5 @@
     <string name="mainLabel">Адресная книга</string>
     <string name="button">Button</string>
     <string name="select_Image">Выбрать изображение</string>
+    <string name="currentLocation">Текущее местоположение</string>
 </resources>
