@@ -72,6 +72,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        currentContact = savedInstanceState?.getSerializable("currentContact") as ContactEntry?
+        position = savedInstanceState?.getInt("position") ?: 0
+
         databaseAdapter = DatabaseAdapter(this)
         databaseAdapter.open();
 
@@ -89,6 +92,12 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putSerializable("currentContact", currentContact)
+        outState.putInt("position", position)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -206,7 +215,8 @@ class MainActivity : AppCompatActivity() {
         ActivityCompat.requestPermissions(
             this, arrayOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.CALL_PHONE,
             ), PERMISSION_ID
         )
     }

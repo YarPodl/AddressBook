@@ -118,6 +118,14 @@ class ContactViewFragment : Fragment() {
                 }
             }
         }
+
+        binding.editTextPhone.setOnClickListener {
+            if (state == ContactState.View) {
+                val intent = Intent(Intent.ACTION_CALL);
+                intent.data = Uri.parse("tel:${binding.editTextPhone.text}")
+                startActivity(intent)
+            }
+        }
     }
 
     override fun onDestroyView() {

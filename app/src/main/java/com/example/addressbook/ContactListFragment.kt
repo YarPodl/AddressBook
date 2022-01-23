@@ -51,7 +51,7 @@ class ContactListFragment : Fragment() {
                 findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
             }
         }
-        recyclerView.scrollToPosition(mainActivity.position)
+        //recyclerView.scrollToPosition(mainActivity.position)
 
         mainActivity.menuItems = listOf(resources.getString(R.string.newContact), resources.getString(R.string.currentLocation))
     }

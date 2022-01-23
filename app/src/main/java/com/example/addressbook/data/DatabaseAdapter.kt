@@ -30,7 +30,7 @@ class DatabaseAdapter(context: Context) {
                 AddressBookDbHelper.Contract.COLUMN_PHONE,
                 AddressBookDbHelper.Contract.COLUMN_IMAGE
             )
-            return database!!.query(AddressBookDbHelper.Contract.TABLE_NAME, columns, null, null, null, null, null)
+            return database!!.query(AddressBookDbHelper.Contract.TABLE_NAME, columns, null, null, null, null, AddressBookDbHelper.Contract.COLUMN_NAME)
         }
 
     val contacts: List<ContactEntry>
