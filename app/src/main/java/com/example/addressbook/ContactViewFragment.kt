@@ -1,7 +1,9 @@
 package com.example.addressbook
 
+import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -12,9 +14,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -40,14 +44,18 @@ class ContactViewFragment : Fragment() {
             {
                 ContactState.Edit -> {
                     binding.contactControl.setText(R.string.save)
-                    binding.editTextPersonName.isEnabled = true
-                    binding.editTextPhone.isEnabled = true
+//                    binding.editTextPersonName.isEnabled = true
+//                    binding.editTextPhone.isEnabled = true
+                    setReadOnlyEdit(binding.editTextPersonName, true)
+                    setReadOnlyEdit(binding.editTextPhone, true)
                     mainActivity.menuItems = listOf(resources.getString(R.string.select_Image))
                 }
                 ContactState.View -> {
                     binding.contactControl.setText(R.string.change)
-                    binding.editTextPersonName.isEnabled = false
-                    binding.editTextPhone.isEnabled = false
+                    //binding.editTextPersonName.isEnabled = false
+                    //binding.editTextPhone.isEnabled = false
+                    setReadOnlyEdit(binding.editTextPersonName, false)
+                    setReadOnlyEdit(binding.editTextPhone, false)
                     mainActivity.menuItems = listOf(resources.getString(R.string.deleteContact))
                 }
             }
@@ -91,9 +99,11 @@ class ContactViewFragment : Fragment() {
         if (contact.id != null)
         {
             binding.contactControl.setText(R.string.change)
-            binding.editTextPersonName.isEnabled = false
+            //binding.editTextPersonName.isEnabled = false
+            setReadOnlyEdit(binding.editTextPersonName, false)
             binding.editTextPersonName.setText(contact.name)
-            binding.editTextPhone.isEnabled = false
+            //binding.editTextPhone.isEnabled = false
+            setReadOnlyEdit(binding.editTextPhone, false)
             binding.editTextPhone.setText(contact.phone)
         }
 
@@ -120,17 +130,47 @@ class ContactViewFragment : Fragment() {
         }
 
         binding.editTextPhone.setOnClickListener {
-            if (state == ContactState.View) {
-                val intent = Intent(Intent.ACTION_CALL);
-                intent.data = Uri.parse("tel:${binding.editTextPhone.text}")
-                startActivity(intent)
+            if (checkPermissions()) {
+                if (state == ContactState.View) {
+                    val intent = Intent(Intent.ACTION_CALL);
+                    intent.data = Uri.parse("tel:${binding.editTextPhone.text}")
+                    startActivity(intent)
+                }
+            }
+            else  {
+                requestPermissions()
             }
         }
+    }
+
+    private fun checkPermissions(): Boolean {
+        if (ActivityCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.CALL_PHONE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return false
+        }
+        return true
+    }
+
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            requireActivity(), arrayOf(
+                Manifest.permission.CALL_PHONE,
+            ), 21
+        )
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setReadOnlyEdit(textEditText: EditText, readOnly : Boolean) {
+        textEditText.isFocusable = readOnly;
+        textEditText.isFocusableInTouchMode = readOnly;
+        textEditText.isClickable = readOnly;
     }
 
     private fun saveOrUpdate() {
